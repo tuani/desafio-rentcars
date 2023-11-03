@@ -22,19 +22,19 @@ Utilizar npm.
 ### Instalação das dependências do Backend:
 
 ```bash
-    npm install express
+npm install express
 ```
 
 ```bash
-    npm install mysql2
+npm install mysql2
 ```
 
 ```bash
-    npm install sequelize
+npm install sequelize
 ```
 
 ```bash
-    npm install nodemon --save-dev
+npm install nodemon --save-dev
 ```
 
 ### Instalação do docker:
@@ -42,7 +42,7 @@ Utilizar npm.
 Atualize os pacotes do sistema e instale as dependências
 
 ```bash
-    sudo apt update
+sudo apt update
 ```
 
 ```bash
@@ -64,33 +64,33 @@ echo "deb [signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://dow
 Atualize o índice de pacotes novamente para incluir o repositório do Docker:
 
 ```bash
-    sudo apt update
+sudo apt update
 ```
 
 Instale o Docker:
 
 ```bash
-    sudo apt install docker-ce docker-ce-cli containerd.io
+sudo apt install docker-ce docker-ce-cli containerd.io
 ```
 
 ### Inicialização do Docker:
 
 ```bash
-    sudo dockerd
+sudo dockerd
 ```
 #### Comandos basicos do docker:
 
 Inicializar o docker
 ```bash
-    sudo systemctl start docker
+sudo systemctl start docker
 ```
 Ver os status do docker
 ```bash
-    sudo systemctl status docker
+sudo systemctl status docker
 ```
 Desligar o service do docker
 ```bash
-    sudo systemctl stop docker
+sudo systemctl stop docker
 ```
 
 
@@ -102,13 +102,13 @@ Desligar o service do docker
 
 ### Banco de dados MySQL
 ```bash
-    mkdir /tmp/mysql-data
-    docker run --name basic-mysql --rm -v /tmp/mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=ANSKk08aPEDbFjDO -e MYSQL_DATABASE=testing -p 3307:3306 -it mysql:8.0
+mkdir /tmp/mysql-data
+docker run --name basic-mysql --rm -v /tmp/mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=ANSKk08aPEDbFjDO -e MYSQL_DATABASE=testing -p 3307:3306 -it mysql:8.0
 ```
 
 Após ter rodado todos estes comandos em outro terminal, dentro da pasta do projeto, para iniciar o projeto basta rodar o seguinte comando:
 
 ```bash
-    npm run dev
+npm run dev
 ```
 
