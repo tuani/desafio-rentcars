@@ -37,6 +37,14 @@ npm install sequelize
 npm install nodemon --save-dev
 ```
 
+```bash
+npm install cors
+```
+
+```bash
+npm install axios
+```
+
 ### Instalação do docker:
 
 Atualize os pacotes do sistema e instale as dependências
@@ -106,9 +114,23 @@ mkdir /tmp/mysql-data
 docker run --name basic-mysql --rm -v /tmp/mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=ANSKk08aPEDbFjDO -e MYSQL_DATABASE=testing -p 3307:3306 -it mysql:8.0
 ```
 
-Após ter rodado todos estes comandos em outro terminal, dentro da pasta do projeto, para iniciar o projeto basta rodar o seguinte comando:
+## Para iniciar o projeto, use os seguintes comandos:
+
+### Inicie o banco de dados (em um terminal separado)
+
+```bash
+docker run --name basic-mysql --rm -v /tmp/mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=ANSKk08aPEDbFjDO -e MYSQL_DATABASE=testing -p 3307:3306 -it mysql:8.0
+```
+
+### Configurar e iniciar o projeto (Backend/Frontend)
+```bash
+cd desafio-rentcars
+```
+
+```bash
+npm install 
+```
 
 ```bash
 npm run dev
 ```
-
