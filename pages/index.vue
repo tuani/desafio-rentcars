@@ -29,25 +29,25 @@ const fields = reactive({
 
 // Função para pegar um dado com o id informado
 async function getOne(id) {
-  const {data} = await axios.get(`${endpoint_url}/vehicle/${id}`)
+  const {data} = await axios.get(`${endpoint_url}/veiculos/${id}`)
   return data || [];
 };
 
 async function getAll() {
-  const {data} = await axios.get(`${endpoint_url}/vehicles`);
+  const {data} = await axios.get(`${endpoint_url}/veiculos`);
   return data || [];
 }
 
 async function createOne(payload) {
-  await axios.post(`${endpoint_url}/vehicle`, payload);
+  await axios.post(`${endpoint_url}/veiculos`, payload);
 }
 
 async function deleteOne(id) {
-  await axios.delete(`${endpoint_url}/vehicle/${id}`);
+  await axios.delete(`${endpoint_url}/veiculos/${id}`);
 };
 
 async function updateOne(id, payload) {
-  await axios.put(`${endpoint_url}/vehicle/${id}`, payload);
+  await axios.put(`${endpoint_url}/veiculos/${id}`, payload);
 }
 
 async function onSearchClick() {
