@@ -134,3 +134,11 @@ npm install
 ```bash
 npm run dev
 ```
+##
+### Quero agradecer por me dar a chance de participar desse processo seletivo. Foi uma experiência incrível e estou animado por ter tido a oportunidade de conhecer a empresa e a equipe. Seja qual for o resultado, estou contente por ter tido essa experiência.
+
+### Espero que gostem do meu projeto.
+
+### Obrigado pela oportunidade!
+
+### At.te, Tuani Martinelli.
