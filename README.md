@@ -121,7 +121,7 @@ docker run --name basic-mysql --rm -v /tmp/mysql-data:/var/lib/mysql -e MYSQL_RO
 ### Inicie o banco de dados (em um terminal separado)
 
 ```bash
-docker run --name basic-mysql --rm -v /tmp/mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=ANSKk08aPEDbFjDO -e MYSQL_DATABASE=testing -p 3307:3306 -it mysql:8.0
+sudo docker run --name basic-mysql --rm -v /tmp/mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=ANSKk08aPEDbFjDO -e MYSQL_DATABASE=testing -p 3307:3306 -it mysql:8.0
 ```
 
 ### Configurar e iniciar o projeto (Backend/Frontend)
@@ -137,7 +137,7 @@ npm install
 npm run dev
 ```
 ##
-### Quero agradecer por me dar a chance de participar desse processo seletivo. Foi uma experiência incrível e estou animado por ter tido a oportunidade de conhecer a empresa e a equipe. Seja qual for o resultado, estou contente por ter tido essa experiência.
+### Quero agradecer por me dar a chance de participar desse processo seletivo. Foi uma experiência incrível e fico agradecida por ter tido a oportunidade de conhecer a empresa e a equipe. Seja qual for o resultado, estou contente por ter tido essa experiência.
 
 ### Espero que gostem do meu projeto.
 
