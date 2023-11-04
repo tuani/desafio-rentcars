@@ -1,22 +1,16 @@
 <script setup lang="js">
-// Importação das funções do Vue 3
 import { ref, reactive } from "vue";
 import axios from 'axios';
 
 const endpoint_url = 'http://localhost:3333';
-// Declaração de variaveis utilitárias
-const shift_options = ["Manual", "Automático", "Automatizado", "CVT"];
+
+const shift_options = ["Manual", "Automático"];
 const year = new Date().getFullYear();
 const search = ref();
 const formType = ref('create');
 const id_to_edit = ref();
-
-// Declaração das variaveis dos campos <UInputs> v-model="fields.…"
-/**
- * reactive() converte o objeto profundamente: objetos aninhados também são agrupados com reactive() quando acessados.
- * Também é chamado por ref() internamente quando o valor ref é um objeto.
- */
-const fields = reactive({
+  
+  const fields = reactive({
   rental_company: '',
   model: '',
   brand: '',
@@ -27,7 +21,7 @@ const fields = reactive({
   air_conditioner: false,
 });
 
-// Função para pegar um dado com o id informado
+
 async function getOne(id) {
   const {data} = await axios.get(`${endpoint_url}/veiculos/${id}`)
   return data || [];
@@ -36,11 +30,11 @@ async function getOne(id) {
 async function getAll() {
   const {data} = await axios.get(`${endpoint_url}/veiculos`);
   return data || [];
-}
+};
 
 async function createOne(payload) {
   await axios.post(`${endpoint_url}/veiculos`, payload);
-}
+};
 
 async function deleteOne(id) {
   await axios.delete(`${endpoint_url}/veiculos/${id}`);
@@ -63,11 +57,12 @@ async function getTableData() {
     return {
       ...row,
       air_conditioner: translateBoolToStr(row.air_conditioner),
+      createdAt: formatDate(row.createdAt),
+      updatedAt: formatDate(row.updatedAt,),
     };
   });
 }
 
-// Função que limpa os campos
 function clearFields() {
   id_to_edit.value = null;
   formType.value = 'create'
@@ -91,11 +86,10 @@ function getPayload() {
     engine: fields.engine,
     doors: fields.doors,
     shift_model: fields.shift_model,
-    air_conditioner: translateStrToBool(fields.air_conditioner),
+    air_conditioner: fields.air_conditioner,
   };
-}
+};
 
-// Envia o formulario
 async function onSubmit(type) {
   const payload = getPayload();
   if (type === 'create') {
@@ -112,7 +106,6 @@ async function onSubmit(type) {
   }
 };
 
-// Popula os campos Uinput com os dados do item pesquisado com o id usnao getOne(id)
 async function onEditClick(id) {
   const response = await getOne(id);
 
@@ -123,23 +116,32 @@ async function onEditClick(id) {
   fields.engine = response.engine;
   fields.doors = response.doors;
   fields.shift_model = response.shift_model;
-  fields.air_conditioner = translateStrToBool(response.air_conditioner);
+  fields.air_conditioner = response.air_conditioner;
+
 
   id_to_edit.value = id;
   formType.value = 'edit';
 };
 
-// chama a deleteOne quando clicar no botao de deletar
 async function onDeleteClick(id) {
   await deleteOne(id);
   await getTableData();
 };
 
-// Estas funções convertem de boleano para texto humano e texto humano para booleano
 const translateBoolToStr = (value) => (value ? "Sim" : "Não");
-const translateStrToBool = (value) => (value === "Sim");
 
-// Declaração do objeto da tabela para estruturação
+function formatDate(date) {
+  if (!date) return;
+  const d = new Date(date);
+  if (!d) return;
+ 
+  const days = d.getDay().toString().padStart(2, '0');
+  const months = d.getMonth().toString().padStart(2, '0');
+
+  return `${days}/${months}/${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`;
+};
+
+
 const table_data = {
   rows: ref([]),
   columns: [
@@ -184,44 +186,51 @@ const submitButtonLabel = computed(() => {
 onMounted(async () => {
   getTableData();
 });
+
 </script>
 
 <template>
-  <UCard class="ma-lg align-center">
-    <h2>CRUD de Veículos</h2>
-    <h3>Adicionar Novo Veículo</h3>
-    <!-- @ serve para eventos, clicks e etc… -->
-    <!-- : antes do nome na prop quer dizer que esta recebendo uma variavel la do <script>…</script> -->
-    <!-- UForm é o mesmo que o <form> mas com algumas coisas a mais como, estilo, funções e reatividade -->
-    <!-- UFormGroup serve para agrupar inputs dentro do form com mais facilidade -->
-    <UForm :state="fields" class="ma-md" @submit="onSubmit(formType)">
+  
+    <UCard class="ma-lg align-center">
+      <h2> CRUD de Veículos</h2>
+    <h3> Adicionar Novo Veículo </h3>
+
+     <UForm :state="fields" class="ma-md" @submit="onSubmit(formType)">
       <UFormGroup label="Locadora:" name="rental_company" class="input ma-md">
         <UInput v-model="fields.rental_company" />
       </UFormGroup>
+
       <UFormGroup label="Modelo:" name="model" class="input ma-md">
         <UInput v-model="fields.model" />
       </UFormGroup>
+
       <UFormGroup label="Marca:" name="brand" class="input ma-md">
         <UInput v-model="fields.brand" />
       </UFormGroup>
+
       <UFormGroup label="Ano:" name="year" class="input ma-md">
-        <UInput v-model="fields.year" type="number" :max="year + 1" :min="1885">
+        <UInput v-model="fields.year" type="number" :max="year + 1" :min="1885"> 
           <span>min 1885 / max: {{ year + 1 }}</span>
         </UInput>
+
       </UFormGroup>
+
       <UFormGroup label="Motor:" name="engine" class="input ma-md">
         <UInput v-model="fields.engine" />
       </UFormGroup>
+
       <UFormGroup label="Portas:" name="doors" class="input ma-md">
         <UInput v-model="fields.doors" type="number" />
       </UFormGroup>
+
       <UFormGroup label="Câmbio:" name="shift_model" class="input ma-md">
         <USelect v-model="fields.shift_model" :options="shift_options" />
       </UFormGroup>
+
       <UFormGroup label="Ar Condicionado:" name="air_conditioner" class="input ma-md">
         <UCheckbox v-model="fields.air_conditioner" class="ma-md justify-center" />
       </UFormGroup>
-
+      
       <div class="action-btn">
         <UButton type="submit" :label="submitButtonLabel" class="ma-lg" />
         <UButton label="Atualizar Listagem" @click="getTableData()" class="ma-lg" />
@@ -234,17 +243,11 @@ onMounted(async () => {
       <UInput class="ma-md" v-model="search" type="number" />
       <UButton class="ma-md" label="Buscar" @click="onSearchClick()" />
     </div>
-    <UTable :columns="table_data.columns" :rows="table_data.rows.value">
-      <!--
-        No Vue.js 3, quando uma prop tem um "#" antes do nome dela,
-        isso indica que a propriedade é uma propriedade sincronizada (ou seja, uma "prop sincronizada").
-        Isso é uma característica introduzida no Vue 3 para permitir a passagem de dados entre o componente pai
-        e o componente filho de uma forma bidirecional e reativa.
-      -->
+    <UTable :columns="table_data.columns" :rows="table_data.rows.value"> 
       <template #actions-data="{ row }">
-        <UDropdown :items="table_data.actions(row)">
-          <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
-        </UDropdown>
+       <UDropdown :items="table_data.actions(row)">
+         <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
+       </UDropdown>
       </template>
     </UTable>
   </UCard>
